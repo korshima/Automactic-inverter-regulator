@@ -8,11 +8,11 @@ void setup() {
 void loop() {
 
 }digitalWrite(Pin13, HIGH);   // turn the LED on 
-  delay(1000);  
+  delay(7,200,000);  
   // wait for two hours
   
   digitalWrite(Pin13, LOW);    // turn the LED off 
-  delay(1000);     
+  delay(7,200,000);     
   // wait for three hours 
   
 }when pin13 = HIGH;
