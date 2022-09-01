@@ -1,0 +1,49 @@
+#include <Servo.h>
+
+// constants won't change
+const int TRIG_PIN  = 6;  // Arduino pin connected to Ultrasonic Sensor's TRIG pin
+const int ECHO_PIN  = 7;  // Arduino pin connected to Ultrasonic Sensor's ECHO pin
+const int DISTANCE_THRESHOLD = 50; // centimeters
+int Servo_servo1 = 9;
+int Servo_servo2 =10;
+
+Servo servo; // create servo object to control a servo
+
+// variables will change:
+float duration_us, distance_cm;
+void setup() {
+  // put your setup code here, to run once:
+Serial.begin (9600);       // initialize serial port
+  pinMode(TRIG_PIN, OUTPUT); // set arduino pin to output mode
+  pinMode(ECHO_PIN, INPUT);  // set arduino pin to input mode
+  servo.attach(Servo_servo1);   // attaches the servo on pin 9 to the servo object
+  servo.attach(Servo_servo2);
+  servo.write(0);
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+// generate 10-microsecond pulse to TRIG pin
+  digitalWrite(TRIG_PIN, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(TRIG_PIN, LOW);
+
+  // measure duration of pulse from ECHO pin
+  duration_us = pulseIn(ECHO_PIN, HIGH);
+  // calculate the distance
+  distance_cm = 0.017 * duration_us;
+
+  if(distance_cm < DISTANCE_THRESHOLD)
+    servo.write(Servo_servo1 (90)); // rotate servo motor to 90 degree
+    servo.write(Servo_servo2 (90)); // rotate servo motor to 90 degree
+  else
+    servo.write(Servo_servo1 (0)); // rotate servo motor to 90 degree
+    servo.write(Servo_servo2 (0)); // rotate servo motor to 90 degree
+
+  // print the value to Serial Monitor
+  Serial.print("distance: ");
+  Serial.print(distance_cm);
+  Serial.println(" cm");
+
+  delay(500);
+}
